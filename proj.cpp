@@ -32,30 +32,33 @@ void Student::calculate() {
 void Student::getdata() {
   cout << "Enter student's roll number: ";
   cin >> rollno;
+  int continuable = 1;
 
   ifstream inFile;
   Student stud;
   inFile.open("student.dat", ios::binary | ios::app);
   while (inFile.read(reinterpret_cast<char *>(&stud), sizeof(Student))) {
     if (rollno == stud.rollno)
-      ;
+      cout << "Roll No already exists";
+    continuable = 0;
   }
+  if (continuable) {
+    cout << "Enter student name: ";
 
-  cout << "Enter student name: ";
+    cin.ignore();
+    cin.getline(name, 50);
 
-  cin.ignore();
-  cin.getline(name, 50);
-
-  cout << "All marks should be out of 100\n";
-  cout << "Enter marks in English: ";
-  cin >> eng_marks;
-  cout << "Enter marks in Math:  ";
-  cin >> math_marks;
-  cout << "Enter marks in Science:  ";
-  cin >> sci_marks;
-  cout << "Enter marks in Computer science:  ";
-  cin >> cs_marks;
-  calculate();
+    cout << "All marks should be out of 100\n";
+    cout << "Enter marks in English: ";
+    cin >> eng_marks;
+    cout << "Enter marks in Math:  ";
+    cin >> math_marks;
+    cout << "Enter marks in Science:  ";
+    cin >> sci_marks;
+    cout << "Enter marks in Computer science:  ";
+    cin >> cs_marks;
+    calculate();
+  }
 }
 void Student::showdata() const {
   cout << "\nRoll number of student : " << rollno;
