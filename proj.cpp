@@ -32,9 +32,20 @@ void Student::calculate() {
 void Student::getdata() {
   cout << "Enter student's roll number: ";
   cin >> rollno;
+
+  ifstream inFile;
+  Student stud;
+  inFile.open("student.dat", ios::binary | ios::app);
+  while (inFile.read(reinterpret_cast<char *>(&stud), sizeof(Student))) {
+    if (rollno == stud.rollno)
+      ;
+  }
+
   cout << "Enter student name: ";
+
   cin.ignore();
   cin.getline(name, 50);
+
   cout << "All marks should be out of 100\n";
   cout << "Enter marks in English: ";
   cin >> eng_marks;
@@ -72,8 +83,8 @@ int main() {
     int num;
     if (system("clear"))
       system("cls");
-    cout << "\n\n\nMENU";
-    cout << "\n\n\t1.Create student record";
+    cout << "\n\n\nMEU";
+    cout << "\n\n\t1. Create student record";
     cout << "\n\n\t2. Search student record";
     cout << "\n\n\t3. Display all students records ";
     cout << "\n\n\t4. Delete student record";
@@ -118,7 +129,8 @@ void create_student() {
   ofstream oFile;
   oFile.open("student.dat", ios::binary | ios::app);
   st.getdata();
-  oFile.write(reinterpret_cast<char *>(&st), sizeof(Student));
+  // oFile.write(reinterpret_cast<char *>(&st), sizeof(Student));
+  oFile.write((char *)(&st), sizeof(Student));
   oFile.close();
   cout << "\n\nStudent record Has Been Created ";
   cin.ignore();
